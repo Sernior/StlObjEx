@@ -11,6 +11,7 @@
 #include <gtest/gtest.h>
 #include <FAConverter.hpp>
 
+const std::string OBJ_FILE_PATH = ""; // add a path to some obj file to test conversion and transformations on
 
 TEST(CompileTime, Test) {
     /*
@@ -21,7 +22,7 @@ TEST(CompileTime, Test) {
     */
 
     FAConverter::Model<FAConverter::FileType::OBJ> objModel;
-    objModel.read("/home/federico/Scrivania/objFiles/airboat.obj");
+    objModel.read(OBJ_FILE_PATH);
     objModel.write<FAConverter::FileType::STL>("example.stl");
     //objModel.write<FAConverter::FileType::OBJ>("example.obj"); // obj writing not supported yet should fail
     //FAConverter::Model<FAConverter::FileType::STL> stlModel; // stl model not supported yet should fail
@@ -37,7 +38,7 @@ TEST(OBJModel, ApplyTransform) {
     It is expected to fail on a compile time error if the model is not supported.
     */
     FAConverter::Model<FAConverter::FileType::OBJ> objModel;
-    objModel.read("/home/federico/Scrivania/objFiles/airboat.obj");
+    objModel.read(OBJ_FILE_PATH);
 
     FAConverter::Matrix4x4 transform = FAConverter::Matrix4x4::translation(10.0f, 5.0f, 3.0f) *
                                        FAConverter::Matrix4x4::rotationZ(45.0f) *
@@ -107,7 +108,8 @@ TEST(OBJModel, CalculateVolume) {
 
     float expectedVolume = 0.784f;
     float tolerance = 0.001f;
-    ASSERT_NEAR(volume, expectedVolume, tolerance);
+    //ASSERT_NEAR(volume, expectedVolume, tolerance);
+    ASSERT_TRUE(false); // TODO
 }
 
 int main(int argc, char* argv[]) {
